@@ -47,4 +47,6 @@ analyse le sentiment de chaque titre et donne une note par média.
    ```
    **⚠️ Suivant votre ordinateur, la commande peut être `python3` au lieu de `python`.**
 
-<p style="text-align: center; font-size: xx-large; font-weight: bold">Enjoy!</p>
+<div style="display: flex; align-items: center; justify-content: center;">
+   <p>Enjoy!</p>
+</div>
