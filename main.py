@@ -26,18 +26,13 @@ class PrintColors:  # Classe pour les couleurs des messages dans la console
 
 
 def get_news_data(url):  # Fonction pour récupérer les données d'un flux RSS
+
     # Utilise feedparser pour lire le flux RSS
     feed = feedparser.parse(url)
 
-    # Vérifie si la lecture du flux RSS est réussie
-    if not feed.bozo:
-        # Extrait les titres et extraits des nouvelles
-        news_data = [(entry.title, entry.summary) for entry in feed.entries]
-        return news_data
-    else:
-        # En cas d'échec de la lecture du flux RSS
-        print(f"{PrintColors.FAIL}🚨 Échec de la récupération des données de {url}. Erreur: {feed.bozo_exception}")
-        return None
+    # Extrait les titres et extraits des nouvelles
+    news_data = [(entry.title, entry.summary) for entry in feed.entries]
+    return news_data
 
 
 def analyze_sentiment(title, excerpt):  # Fonction pour analyser un article et attribuer une note
@@ -72,54 +67,62 @@ def main():
     media_sentiments = {}
     articles_limit = 3
 
-    for media, url in media_sites.items():
-        # Pour chaque média, appelle la fonction get_news_data pour récupérer les données
-        news_data = get_news_data(url)
+    try:
 
-        # Crée une liste vide pour récupérer les notes de chaque article
-        media_sentiments[media] = []
+        for media, url in media_sites.items():
+            # Pour chaque média, appelle la fonction get_news_data pour récupérer les données
+            news_data = get_news_data(url)
 
-        print(" ")
-        print(f"{PrintColors.ENDC}Analyse des sentiments pour {media}...")
-        if len(news_data) > articles_limit:  # Si le nombre d'articles est supérieur à la limite
-            print(f"{PrintColors.OKGREEN}Nombre d'articles trouvé : {len(news_data)} (limitation à {articles_limit})")
-            # Réduit le nombre d'articles à la limite
-            news_data = news_data[:articles_limit]
-        else:  # Si le nombre d'articles est inférieur ou égal à la limite
-            print(f"{PrintColors.OKCYAN}Nombre d'articles trouvé : {len(news_data)}")
-        print(" ")
+            # Crée une liste vide pour récupérer les notes de chaque article
+            media_sentiments[media] = []
 
-        # Analyse le sentiment pour chaque article
-        for i in range(0, len(news_data)):
-            title, excerpt = news_data[i]  # Extrait le titre et l'extrait de l'article et les stocke dans des variables
-            print(f"{PrintColors.ENDC}Analyse de l'article : {title}")
+            print(" ")
+            print(f"{PrintColors.ENDC}Analyse des sentiments pour {media}...")
 
-            try:
-                sentiment_note = analyze_sentiment(title, excerpt)
-                media_sentiments[media].append(sentiment_note)
-            except Exception as e:
+            if len(news_data) > articles_limit:  # Si le nombre d'articles est supérieur à la limite
                 print(
-                    f"{PrintColors.FAIL}🚨 Erreur lors de l'analyse du sentiment pour l'article '{title}': {PrintColors.UNDERLINE}{e}"
-                )
-
-            print(f"{PrintColors.ENDC}")
-
-    # Calcule la note moyenne pour chaque média
-    for media, sentiments in media_sentiments.items():
-        print(f"{PrintColors.ENDC}Calcul de la moyenne des sentiments pour {media}...")
-        if sentiments:  # Vérifie si la liste n'est pas vide
-            average_sentiment = sum(sentiments) / len(sentiments)
-            media_sentiments[media] = average_sentiment
-            print(f"{PrintColors.OKGREEN}Moyenne des sentiments pour {media}: {round(average_sentiment, 2)}")
-            print(" ")
-        else:
-            media_sentiments[media] = 0  # Attribue une valeur par défaut si la liste est vide
-            print(f"{PrintColors.WARNING}Aucun article trouvé pour {media}")
+                    f"{PrintColors.OKGREEN}Nombre d'articles trouvé : {len(news_data)} (limitation à {articles_limit})")
+                # Réduit le nombre d'articles à la limite
+                news_data = news_data[:articles_limit]
+            else:  # Si le nombre d'articles est inférieur ou égal à la limite
+                print(f"{PrintColors.OKCYAN}Nombre d'articles trouvé : {len(news_data)}")
             print(" ")
 
-    # Calcule la moyenne globale
-    overall_average_sentiment = sum(media_sentiments.values()) / len(media_sentiments)
-    print(f"{PrintColors.UNDERLINE}{PrintColors.BOLD}Moyenne globale: {round(overall_average_sentiment, 2)}")
+            # Analyse le sentiment pour chaque article
+            for i in range(0, len(news_data)):
+                title, excerpt = news_data[
+                    i]  # Extrait le titre et l'extrait de l'article et les stocke dans des variables
+                print(f"{PrintColors.ENDC}Analyse de l'article : {title}")
+
+                try:
+                    sentiment_note = analyze_sentiment(title, excerpt)
+                    media_sentiments[media].append(sentiment_note)
+                except Exception as e:
+                    print(
+                        f"{PrintColors.FAIL}🚨 Erreur lors de l'analyse du sentiment pour l'article '{title}': {PrintColors.UNDERLINE}{e}"
+                    )
+
+                print(f"{PrintColors.ENDC}")
+
+        # Calcule la note moyenne pour chaque média
+        for media, sentiments in media_sentiments.items():
+            print(f"{PrintColors.ENDC}Calcul de la moyenne des sentiments pour {media}...")
+            if sentiments:  # Vérifie si la liste n'est pas vide
+                average_sentiment = sum(sentiments) / len(sentiments)
+                media_sentiments[media] = average_sentiment
+                print(f"{PrintColors.OKGREEN}Moyenne des sentiments pour {media}: {round(average_sentiment, 2)}")
+                print(" ")
+            else:
+                media_sentiments[media] = 0  # Attribue une valeur par défaut si la liste est vide
+                print(f"{PrintColors.WARNING}Aucun article trouvé pour {media}")
+                print(" ")
+
+        # Calcule la moyenne globale
+        overall_average_sentiment = sum(media_sentiments.values()) / len(media_sentiments)
+        print(f"{PrintColors.UNDERLINE}{PrintColors.BOLD}Moyenne globale: {round(overall_average_sentiment, 2)}")
+
+    except Exception as e:
+        print(f"{PrintColors.FAIL}🚨 Erreur lors de l'éxécution du script : {PrintColors.UNDERLINE}{e}")
 
 
 if __name__ == "__main__":
