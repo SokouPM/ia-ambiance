@@ -12,7 +12,7 @@ import feedparser
 from langchain.llms import Ollama
 
 
-class printcolors:
+class PrintColors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
@@ -51,10 +51,10 @@ def analyze_sentiment(title, excerpt):
     llm = Ollama(model="llama2")
     response = llm.predict(prompt + title + excerpt)
 
-    print(f"{printcolors.OKCYAN}{response}")
+    print(f"{PrintColors.OKCYAN}{response}")
 
     sentiment_note = int(re.search(r'\d+', response).group())
-    print(f"{printcolors.OKGREEN}Note attribuée : {sentiment_note}")
+    print(f"{PrintColors.OKGREEN}Note attribuée : {sentiment_note}")
 
     return sentiment_note
 
@@ -74,45 +74,45 @@ def main():
         media_sentiments[media] = []
 
         print(" ")
-        print(f"{printcolors.ENDC}Analyse des sentiments pour {media}...")
+        print(f"{PrintColors.ENDC}Analyse des sentiments pour {media}...")
         if len(news_data) > articles_limit:
-            print(f"{printcolors.OKGREEN}Nombre d'articles trouvé : {len(news_data)} (limitation à {articles_limit})")
+            print(f"{PrintColors.OKGREEN}Nombre d'articles trouvé : {len(news_data)} (limitation à {articles_limit})")
             news_data = news_data[:articles_limit]  # Limiter le nombre d'articles à 3.
         else:
-            print(f"{printcolors.OKCYAN}Nombre d'articles trouvé : {len(news_data)}")
+            print(f"{PrintColors.OKCYAN}Nombre d'articles trouvé : {len(news_data)}")
         print(" ")
 
         # Analyser le sentiment pour chaque article (limité à 1 pour le moment)
         for i in range(0, len(news_data)):
             title, excerpt = news_data[i]
-            print(f"{printcolors.ENDC}Analyse de l'article : {title}")
+            print(f"{PrintColors.ENDC}Analyse de l'article : {title}")
 
             try:
                 sentiment_note = analyze_sentiment(title, excerpt)
                 media_sentiments[media].append(sentiment_note)
             except Exception as e:
                 print(
-                    f"{printcolors.FAIL}🚨 Erreur lors de l'analyse du sentiment pour l'article '{title}': {printcolors.UNDERLINE}{e}"
+                    f"{PrintColors.FAIL}🚨 Erreur lors de l'analyse du sentiment pour l'article '{title}': {PrintColors.UNDERLINE}{e}"
                 )
 
-            print(f"{printcolors.ENDC}")
+            print(f"{PrintColors.ENDC}")
 
     # Calculer la note moyenne pour chaque média
     for media, sentiments in media_sentiments.items():
-        print(f"{printcolors.ENDC}Calcul de la moyenne des sentiments pour {media}...")
+        print(f"{PrintColors.ENDC}Calcul de la moyenne des sentiments pour {media}...")
         if sentiments:  # Vérifiez si la liste n'est pas vide
             average_sentiment = sum(sentiments) / len(sentiments)
             media_sentiments[media] = average_sentiment
-            print(f"{printcolors.OKGREEN}Moyenne des sentiments pour {media}: {round(average_sentiment, 2)}")
+            print(f"{PrintColors.OKGREEN}Moyenne des sentiments pour {media}: {round(average_sentiment, 2)}")
             print(" ")
         else:
             media_sentiments[media] = 0  # Ou une valeur par défaut si la liste est vide
-            print(f"{printcolors.WARNING}Aucun article trouvé pour {media}")
+            print(f"{PrintColors.WARNING}Aucun article trouvé pour {media}")
             print(" ")
 
     # Calculer la moyenne globale
     overall_average_sentiment = sum(media_sentiments.values()) / len(media_sentiments)
-    print(f"{printcolors.UNDERLINE}{printcolors.BOLD}Moyenne globale: {round(overall_average_sentiment, 2)}")
+    print(f"{PrintColors.UNDERLINE}{PrintColors.BOLD}Moyenne globale: {round(overall_average_sentiment, 2)}")
 
 
 if __name__ == "__main__":
