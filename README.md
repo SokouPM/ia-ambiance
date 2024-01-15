@@ -16,20 +16,23 @@ analyse le sentiment de chaque titre et donne une note par média.
    installez-les ([Python](https://www.python.org/downloads/), [pip](https://pip.pypa.io/en/stable/installation/)).
 
 
-2. Assurez-vous aussi d'avoir le modèle `llama2` installé ([Ollama](https://ollama.ai/)) et éxécuté puis tapez la
-   commande suivante :
-   ```bash
-   ollama pull llama2
-   ```
-
-3. Créez un environnement virtuel et activez-le en vous assurant d'être dans le dossier du projet :
+2. Créez un environnement virtuel et activez-le en vous assurant d'être dans le dossier du projet :
    ```bash
    python -m venv venv
+   ```
+   ```bash
    source venv/bin/activate
    ```
    **⚠️ Suivant votre ordinateur, la commande peut être `python3` au lieu de `python`.<br />
    ⚠️ Suivant votre ordinateur, la commande peut être `source venv/Scripts/activate` (Windows)
    ou `source venv/bin/activate` (Linux/MacOS).**
+
+
+3. Assurez-vous aussi d'avoir le modèle `llama2` installé ([Ollama](https://ollama.ai/)) et éxécuté puis tapez la
+   commande suivante :
+   ```bash
+   ollama pull llama2
+   ```
 
 
 4. Installez les dépendances nécessaires en vous assurant d'être dans le dossier du projet :
