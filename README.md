@@ -27,7 +27,7 @@ analyse le sentiment de chaque titre et donne une note par média.
    python -m venv venv
    source venv/bin/activate
    ```
-   **⚠️ Suivant votre ordinateur, la commande peut être `python3` au lieu de `python`.
+   **⚠️ Suivant votre ordinateur, la commande peut être `python3` au lieu de `python`.<br />
    ⚠️ Suivant votre ordinateur, la commande peut être `source venv/Scripts/activate` (Windows)
    ou `source venv/bin/activate` (Linux/MacOS).**
 
