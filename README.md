@@ -8,6 +8,8 @@ analyse le sentiment de chaque titre et donne une note par média.
 1. Assurez-vous d'avoir Python 3.6 ou plus récent ainsi que `pip` installé.
    ```bash
     python --version
+   ```
+   ```bash
     pip --version
    ```
    **⚠️ Suivant votre ordinateur, la commande peut être `python3` au lieu de `python` et `pip3` au lieu de `pip`.**
