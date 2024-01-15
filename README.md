@@ -10,17 +10,20 @@ analyse le sentiment de chaque titre et donne une note par média.
     python --version
     pip --version
    ```
-   sinon, installez-le :
+   ⚠️ Suivant votre ordinateur, la commande peut être `python3` au lieu de `python` et `pip3` au lieu de `pip`.
+
+   Si ce n'est pas le cas, installez-les :
+
    ```bash
     sudo apt install python3 python3-pip
     ```
 
-2. Assurez-vous aussi d'avoir le modèle `llama2` installé.
+2. Assurez-vous aussi d'avoir le modèle `llama2` installé ([Ollama](https://ollama.ai/))
    ```bash
    ollama pull llama2
    ```
 
-3. Installez les dépendances nécessaires :
+3. Installez les dépendances nécessaires en vous assurant d'être dans le dossier du projet :
 
    ```bash
    pip install -r requirements.txt
