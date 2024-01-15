@@ -46,7 +46,3 @@ analyse le sentiment de chaque titre et donne une note par média.
    python main.py
    ```
    **⚠️ Suivant votre ordinateur, la commande peut être `python3` au lieu de `python`.**
-
-<div style="display: flex; align-items: center; justify-content: center;">
-   <p>Enjoy!</p>
-</div>
