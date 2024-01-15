@@ -30,8 +30,8 @@ analyse le sentiment de chaque titre et donne une note par média.
    ou `source venv/bin/activate` (Linux/MacOS).**
 
 
-3. Assurez-vous aussi d'avoir le modèle `llama2` installé ([Ollama](https://ollama.ai/)) et éxécuté puis tapez la
-   commande suivante :
+3. Assurez-vous aussi d'avoir le modèle `llama2` installé ([Ollama](https://ollama.ai/)) est éxécuté puis tapez la
+   commande suivante, en vous assurant d'être dans le dossier du projet :
    ```bash
    ollama pull llama2
    ```
