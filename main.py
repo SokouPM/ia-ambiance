@@ -8,6 +8,7 @@
 
 
 import re
+import ssl
 
 import feedparser
 from langchain.llms import Ollama
@@ -26,7 +27,7 @@ class PrintColors:  # Classe pour les couleurs des messages dans la console
 
 
 def get_news_data(url):  # Fonction pour récupérer les données d'un flux RSS
-
+    ssl._create_default_https_context = ssl._create_unverified_context  # Désactive la vérification SSL
     # Utilise feedparser pour lire le flux RSS
     feed = feedparser.parse(url)
 
@@ -52,7 +53,7 @@ def analyze_sentiment(title, excerpt):  # Fonction pour analyser un article et a
 
     # Extrait la note de la réponse
     sentiment_note = int(re.search(r'\d+', response).group())
-    print(f"{PrintColors.OKGREEN}Note attribuée : {sentiment_note}")
+    print(f"{PrintColors.OKGREEN}Note attribuée : {sentiment_note}/10")
 
     return sentiment_note
 
@@ -110,7 +111,7 @@ def main():
             if sentiments:  # Vérifie si la liste n'est pas vide
                 average_sentiment = sum(sentiments) / len(sentiments)
                 media_sentiments[media] = average_sentiment
-                print(f"{PrintColors.OKGREEN}Moyenne des sentiments pour {media}: {round(average_sentiment, 2)}")
+                print(f"{PrintColors.OKGREEN}Moyenne des sentiments pour {media}: {round(average_sentiment, 2)}/10")
                 print(" ")
             else:
                 media_sentiments[media] = 0  # Attribue une valeur par défaut si la liste est vide
@@ -119,7 +120,7 @@ def main():
 
         # Calcule la moyenne globale
         overall_average_sentiment = sum(media_sentiments.values()) / len(media_sentiments)
-        print(f"{PrintColors.UNDERLINE}{PrintColors.BOLD}Moyenne globale: {round(overall_average_sentiment, 2)}")
+        print(f"{PrintColors.UNDERLINE}{PrintColors.BOLD}Moyenne globale: {round(overall_average_sentiment, 2)}/10")
 
     except Exception as e:
         print(f"{PrintColors.FAIL}🚨 Erreur lors de l'éxécution du script : {PrintColors.UNDERLINE}{e}")
